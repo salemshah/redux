@@ -1,7 +1,8 @@
 import React, {useState} from "react";
+import {connect} from "react-redux"
 
 function Counter(props) {
-    const {count, name} = props.state
+    console.log("I'am props", props)
     const [counter, setCounter] = useState(0);
     return (
         <div className="container text-center">
@@ -11,29 +12,44 @@ function Counter(props) {
             <div>
                 It comes from Redux: Name
                 <div className="h2">
-                    {name}
+                    {/*{name}*/}
                 </div>
             </div>
             <div>It comes from Redux: count
-                <div className="h2">{count}</div>
+                <div className="h2">{/*{count}*/}</div>
             </div>
             <div>
                 <p>{counter}</p>
             </div>
             <div className="d-flex justify-content-center align-items-center">
                 <div className="mx-2">
-                    <button className="btn btn-warning"
-                            onClick={() => setCounter(counter > 0 ? counter - 1 : 0)}>Decrease
+                    <button
+                        className="btn btn-warning"
+                        onClick={() => setCounter(counter - 1)}>
+                        Decrease
                     </button>
                 </div>
                 <div className="mx-2">
-                    <button className="btn btn-danger" onClick={() => setCounter(0)}>Reset</button>
+                    <button
+                        className="btn btn-danger"
+                        onClick={() => setCounter(0)}>
+                        Reset
+                    </button>
                 </div>
                 <div className="mx-2">
-                    <button className="btn btn-primary" onClick={() => setCounter(counter + 1)}>Increase</button>
+                    <button
+                        className="btn btn-primary"
+                        onClick={() => setCounter(counter + 1)}>
+                        Increase
+                    </button>
                 </div>
             </div>
         </div>);
 }
 
-export default Counter;
+const mapStateToProp = (state) => {
+    console.log(state)
+    return {count: state.count}
+}
+
+export default connect(mapStateToProp)(Counter);
