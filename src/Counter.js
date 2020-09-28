@@ -1,6 +1,8 @@
 import React from "react";
 import {connect} from "react-redux"
-import {INCREASE, DECREASE, RESET} from "./Action"
+import {INCREASE, DECREASE, RESET, MODAL_OPEN} from "./Redux/Redux-Actions/Action"
+import ModalComponent from "./ModalComponent";
+
 
 function Counter(props) {
     //console.log("I'am props", props)
@@ -17,7 +19,7 @@ function Counter(props) {
                     {name}
                 </div>
             </div>
-
+            <ModalComponent/>
             {message && <div className="alert alert-warning">The counter cannot shrink from zero!</div>}
 
             <div>It comes from Redux: count
@@ -45,20 +47,32 @@ function Counter(props) {
                         Increase
                     </button>
                 </div>
+
             </div>
         </div>);
 }
 
-const mapStateToProp = (state) => {
-    return {count: state.count, name: state.name, message: state.message}
+const mapStateToProp = ({countState: {name, count, message}}) => {
+    return {count: count, name: name, message: message}
 }
 
-const mapDispatchToProp = (dispatch, ownProps) => {
-    console.log(ownProps)
+const mapDispatchToProp = (dispatch) => {
     return {
         increase: () => dispatch({type: INCREASE}),
         decrease: () => dispatch({type: DECREASE}),
-        reset: () => dispatch({type: RESET})
+        reset: () => {
+            dispatch({type: RESET})
+            dispatch({
+                type: MODAL_OPEN,
+                payload: {
+                    name: "Reset",
+                    text: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. " +
+                        "A adipisci assumenda cumque deserunt dignissimos doloribus " +
+                        "dolorum earum eos fugiat hic inventore nostrum numquam perferendis " +
+                        "quaerat quo, recusandae, reprehenderit totam veritatis!"
+                }
+            })
+        }
     }
 }
 

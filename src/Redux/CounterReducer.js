@@ -1,4 +1,4 @@
-import {INCREASE, DECREASE, RESET} from "./Action"
+import {INCREASE, DECREASE, RESET} from "./Redux-Actions/Action"
 
 const defaultValue = {
     count: 0,
